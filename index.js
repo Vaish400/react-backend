@@ -40,7 +40,7 @@ mongoose.connect('mongodb+srv://vaishnavi:Vaishu%402004@leadsoft.zpqewrz.mongodb
             const{userName,password}=req.body
             const userExist=await User.findOne({userName})
             if(!userExist){
-                return res.json({
+                return res.json({ 
                     status:false,
                     message:'User not found'
                 })
