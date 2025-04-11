@@ -1,6 +1,6 @@
 const express=require('express')
 const router=express.Router()
-const Product = require('../models/Product.js')
+const Product=require('../models/Product')
 
 router.post('/add',async(req,res)=>{
         try{
@@ -44,6 +44,46 @@ router.get('/get',async(req,res)=>{
     }
 
 })
+router.delete('/delete/:id',async(req,res)=>{
+    const id=req.params.id
+    await Product.findByIdAndDelete(id)
+    try{
+        res.json({
+            status:true,
+            message:'Product deleted successfully'
+        })
+    }
+    catch(err){
+        res.json({
+            status:false,
+            message:`Error${err}`
+        })
+
+    }
+})
+
+
+router.put('/update/:id',async(req,res)=>{
+    const id=req.params.id
+    await Product.findByIdAndUpdate(id,req.body,{new:true})
+    try{
+        const updated=await Product.findByIdAndUpdate(id)
+        res.json({
+            status:true,
+            message:'Product updated successfully'
+        })
+    }
+    catch(err){
+        res.json({
+            status:false,
+            message:`Error${err}`
+        })
+    }
+    
+
+})
+
+
 
 
 module.exports=router
